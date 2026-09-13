@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "dbarke.notifications",
+  "name": "Notifications",
+  "version": "1.0.0",
+  "author": "dbarke",
+  "license": "MIT",
+  "description": "A standing bell in the bar: what arrived while you were looking elsewhere, replayable as toasts, with do-not-disturb one right-click away.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Notifications",
+    "description": "Counts the notifications that expired unseen, lists them in the panel, and makes silencing visible instead of silent.",
+    "category": "System",
+    "aliases": ["notifications", "notify", "bell", "dnd", "donotdisturb"],
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "refreshIntervalSec": 15,
+      "showBadge": true,
+      "hideWhenQuiet": false,
+      "bodyChars": 140,
+      "ignorePatterns": "Screenshot saved"
+    },
+    "schema": [
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 5,
+        "max": 600,
+        "step": 5,
+        "defaultValue": 15,
+        "description": "A backstop only. The count already updates the moment a toast expires into history, so polling harder buys nothing."
+      },
+      {
+        "key": "showBadge",
+        "type": "boolean",
+        "label": "Show the count",
+        "defaultValue": true,
+        "description": "Off leaves just the bell, which still changes shape when something is waiting."
+      },
+      {
+        "key": "hideWhenQuiet",
+        "type": "boolean",
+        "label": "Hide when there is nothing to say",
+        "defaultValue": false,
+        "description": "Collapses the widget entirely while nothing is unseen and notifications are not silenced. Silenced always stays visible -- a hidden mute is how you miss a day of messages."
+      },
+      {
+        "key": "bodyChars",
+        "type": "integer",
+        "label": "Body text limit (characters)",
+        "min": 0,
+        "max": 600,
+        "step": 20,
+        "defaultValue": 140,
+        "description": "How much of each notification body the panel shows before eliding. 0 shows titles only."
+      },
+      {
+        "key": "ignorePatterns",
+        "type": "string",
+        "label": "Ignore notifications matching",
+        "defaultValue": "Screenshot saved",
+        "description": "Comma-separated text, matched case-insensitively against each notification's app name and title. Matches are dropped before anything is counted or listed. The default filters Omarchy's own screenshot confirmation -- you pressed the key, so it was never missed. Empty keeps everything."
+      }
+    ]
+  }
+}
